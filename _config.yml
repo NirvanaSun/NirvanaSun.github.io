@@ -80,5 +80,5 @@ theme: next
 deploy:
   type: git
   repo: https://github.com/NirvanaSun/NirvanaSun.github.io.git
-  branch: master
+  branch: hexo
   message: 至诚
