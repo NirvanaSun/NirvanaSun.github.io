@@ -7,7 +7,7 @@
 
 <html class="theme-next gemini use-motion" lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="numpy中提供了一个可以进行多项式拟合的函数，polyfit(),官网文件详见https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html#numpy.polyfit最小二乘多项式拟合。 拟合多项式p（x）＝p〔0〕*x**DEG+…+DEG的程度DEG到点（x，y）。返回最小平方误差的系数p的向量polyfit(">
+<meta name="description" content="numpy中提供了一个可以进行多项式拟合的函数，polyfit(),官网文件详见https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html#numpy.polyfit最小二乘多项式拟合。 拟合多项式p（x）＝p〔0〕x*DEG+…+DEG的程度DEG到点（x，y）。返回最小平方误差的系数p的向量polyfit(x,">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python:用polyfit()拟合曲线">
 <meta property="og:url" content="http://nirvanasun.github.io/2018/09/10/python-polyfit-拟合曲线/index.html">
 <meta property="og:site_name" content="爆裂">
-<meta property="og:description" content="numpy中提供了一个可以进行多项式拟合的函数，polyfit(),官网文件详见https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html#numpy.polyfit最小二乘多项式拟合。 拟合多项式p（x）＝p〔0〕*x**DEG+…+DEG的程度DEG到点（x，y）。返回最小平方误差的系数p的向量polyfit(">
+<meta property="og:description" content="numpy中提供了一个可以进行多项式拟合的函数，polyfit(),官网文件详见https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html#numpy.polyfit最小二乘多项式拟合。 拟合多项式p（x）＝p〔0〕x*DEG+…+DEG的程度DEG到点（x，y）。返回最小平方误差的系数p的向量polyfit(x,">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-11T05:18:23.061Z">
+<meta property="og:updated_time" content="2018-09-11T05:54:34.329Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python:用polyfit()拟合曲线">
-<meta name="twitter:description" content="numpy中提供了一个可以进行多项式拟合的函数，polyfit(),官网文件详见https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html#numpy.polyfit最小二乘多项式拟合。 拟合多项式p（x）＝p〔0〕*x**DEG+…+DEG的程度DEG到点（x，y）。返回最小平方误差的系数p的向量polyfit(">
+<meta name="twitter:description" content="numpy中提供了一个可以进行多项式拟合的函数，polyfit(),官网文件详见https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html#numpy.polyfit最小二乘多项式拟合。 拟合多项式p（x）＝p〔0〕x*DEG+…+DEG的程度DEG到点（x，y）。返回最小平方误差的系数p的向量polyfit(x,">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>python:用polyfit()拟合曲线 | 爆裂</title>
+  <title>python:用polyfit()拟合曲线 | 爆裂</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -145,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -353,13 +353,9 @@
 
       
         <p>numpy中提供了一个可以进行多项式拟合的函数，polyfit(),官网文件详见<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html#numpy.polyfit" target="_blank" rel="noopener">https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html#numpy.polyfit</a><br>最小二乘多项式拟合。</p>
-<p>拟合多项式p（x）＝p〔0〕*x**DEG+…+DEG的程度DEG到点（x，y）。返回最小平方误差的系数p的向量<br>polyfit(x,y deg,)<br>其中，x, y 分别是数据点的横坐标和纵坐标，deg是拟合多项式的最高次幂<br>例如，<br>import numpy as np<br>import matplotlib.pyplot as plt<br>x=np.linspace(1,15,20)<br>print(x)<br>[ 1.          2.55555556  4.11111111  5.66666667  7.22222222  8.77777778<br>10.33333333 11.88888889 13.44444444 15.        ]<br>y=np.random.random(10)#生成一个随即矩阵</p>
+<p>拟合多项式p（x）＝p〔0〕<em>x*</em>DEG+…+DEG的程度DEG到点（x，y）。返回最小平方误差的系数p的向量<br>polyfit(x,y deg,)<br>其中，x, y 分别是数据点的横坐标和纵坐标，deg是拟合多项式的最高次幂<br>例如，<br>import numpy as np<br>import matplotlib.pyplot as plt<br>x=np.linspace(1,15,20)<br>print(x)<br>[ 1.          2.55555556  4.11111111  5.66666667  7.22222222  8.77777778<br>10.33333333 11.88888889 13.44444444 15.        ]<br>y=np.random.random(10)#生成一个随即矩阵</p>
 <p>pv=np.polyfit(x,y,8)#拟合成5阶多项式<br>pv1=np.ploy1d(pv)#曲线的表达式<br>print(pv1)</p>
-<pre><code>8             7           6          5          4         3
-</code></pre><p>2.204e-06 x - 0.0001502 x + 0.00425 x - 0.0647 x + 0.5736 x - 2.988 x<br>         2</p>
-<ul>
-<li>8.731 x - 12.57 x + 6.802</li>
-</ul>
+<p>$2.204e-06 x^8 - 0.0001502 x^7 + 0.00425 x^6 - 0.0647 x^5 + 0.5736 x^4 - 2.988 x<br>^3+ 8.731 x^2 - 12.57 x + 6.802 $</p>
 <p>plt.plot(x,y,”ko”,label=’points’)<br>plt.plot(x,pxy1(x),”g-“,label=’fit_curves’)<br>plt.xlabel(“x”)<br>plt.ylabel(“y”)<br>plt.xlim(0,15)<br>plt.ylim(0,1)<br>plt.legend(loc=0)<br>plt.title(“fit curves”)<br>plt.show()<br>plt.savefig(‘fitcurves.eps’)<br>效果如下图所示<br>polyfit()的其他变量及功能</p>
 
       
@@ -660,7 +656,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 
