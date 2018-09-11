@@ -249,6 +249,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://nirvanasun.github.io/2018/09/10/python-polyfit-拟合曲线/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="永哥">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="爆裂">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/10/python-polyfit-拟合曲线/" itemprop="url">python:用polyfit()拟合曲线</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-11T01:14:23+08:00">
+                2018-09-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程算法技术/" itemprop="url" rel="index">
+                    <span itemprop="name">编程算法技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>numpy中提供了一个可以进行多项式拟合的函数，polyfit(),官网文件详见<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html#numpy.polyfit" target="_blank" rel="noopener">https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html#numpy.polyfit</a><br>最小二乘多项式拟合。</p>
+<p>拟合多项式p（x）＝p〔0〕*x**DEG+…+DEG的程度DEG到点（x，y）。返回最小平方误差的系数p的向量<br>polyfit(x,y deg,)<br>其中，x, y 分别是数据点的横坐标和纵坐标，deg是拟合多项式的最高次幂<br>例如，<br>import numpy as np<br>import matplotlib.pyplot as plt<br>x=np.linspace(1,15,20)<br>print(x)<br>[ 1.          2.55555556  4.11111111  5.66666667  7.22222222  8.77777778<br>10.33333333 11.88888889 13.44444444 15.        ]<br>y=np.random.random(10)#生成一个随即矩阵</p>
+<p>pv=np.polyfit(x,y,8)#拟合成5阶多项式<br>pv1=np.ploy1d(pv)#曲线的表达式<br>print(pv1)</p>
+<pre><code>8             7           6          5          4         3
+</code></pre><p>2.204e-06 x - 0.0001502 x + 0.00425 x - 0.0647 x + 0.5736 x - 2.988 x<br>         2</p>
+<ul>
+<li>8.731 x - 12.57 x + 6.802</li>
+</ul>
+<p>plt.plot(x,y,”ko”,label=’points’)<br>plt.plot(x,pxy1(x),”g-“,label=’fit_curves’)<br>plt.xlabel(“x”)<br>plt.ylabel(“y”)<br>plt.xlim(0,15)<br>plt.ylim(0,1)<br>plt.legend(loc=0)<br>plt.title(“fit curves”)<br>plt.show()<br>plt.savefig(‘fitcurves.eps’)<br>效果如下图所示<br>polyfit()的其他变量及功能</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://nirvanasun.github.io/2018/09/09/第一篇博客/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -403,14 +553,32 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
