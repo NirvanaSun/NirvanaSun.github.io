@@ -259,6 +259,142 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://nirvanasun.github.io2018/09/16/python-numpy-lexsort-对矩阵按照某行-列-排序/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="永哥">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="爆裂">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="2018/09/16/python-numpy-lexsort-对矩阵按照某行-列-排序/" itemprop="url">python:numpy.lexsort()对矩阵按照某行(列)排序</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-17T08:47:48+08:00">
+                2018-09-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="python-numpy-lexsort-对矩阵按照某行-列-排序"><a href="#python-numpy-lexsort-对矩阵按照某行-列-排序" class="headerlink" title="python: numpy.lexsort()对矩阵按照某行(列)排序"></a>python: numpy.lexsort()对矩阵按照某行(列)排序</h1><p><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.lexsort.html" target="_blank" rel="noopener">lexsort()</a>是numpy下的一个函数，可以实现对数组或列表按照某一行或列进行排序。<br>lexsort(keys, axis=-1)</p>
+<p>字面意思：用键值序列提供一个间接稳定的排序<br>返回一个描述多列排序次序的整数数组。键值序列的最后一个键值提供主排序顺序，倒数第二个提供第二个排序顺序……<br>如果键值参数是一个2D数组，那么数组的行就是排序的键，将会按照最后一行、倒数第二行……来排序</p>
+<p>官网给出的几个例子：</p>
+<p>Sort names: first by surname, then by name.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>surnames =    (<span class="string">'Hertz'</span>,    <span class="string">'Galilei'</span>, <span class="string">'Hertz'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>first_names = (<span class="string">'Heinrich'</span>, <span class="string">'Galileo'</span>, <span class="string">'Gustav'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>ind = np.lexsort((first_names, surnames))</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>ind</span><br><span class="line">array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>])</span><br></pre></td></tr></table></figure></p>
+<p>这里ind就是函数按照surnames,first_names排序后返回的序号，排序过程为，先按照surnames提供的序列进行升序排序，当遇到相同的元素时，按照对应的first_names中的元素进行升序排列。</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>[surnames[i] + “, “ + first_names[i] for i in ind]<br>[‘Galilei, Galileo’, ‘Hertz, Gustav’, ‘Hertz, Heinrich’]</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="利用lexsort-对二维数组按照某一列排序"><a href="#利用lexsort-对二维数组按照某一列排序" class="headerlink" title="利用lexsort()对二维数组按照某一列排序"></a>利用lexsort()对二维数组按照某一列排序</h2><p>lexsort()的键参数是二维数组时，对行排序，排序的方式是先对最后一行排序，当有相同元素时，然后按照倒数第二行对应的元素排序，……以此类推。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a=np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">5</span>],[<span class="number">5</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">9</span>],[<span class="number">6</span>,<span class="number">2</span>,<span class="number">9</span>,<span class="number">5</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">5</span>],</span><br><span class="line">                  [<span class="number">5</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">9</span>],</span><br><span class="line">                  [<span class="number">6</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">5</span>]])</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;a1=np.lexsort(a)</span><br><span class="line">&gt;&gt;&gt;a1</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>array([<span class="number">1</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure></p>
+<p>al返回的是a的最后一行按照从小到大排列后所对应的索引值，比如最后一行为[6,2,9,5]，从小到达排列为：2,5,6,9;其相对的索引号为：1,3,0，2。<br>如果对a按照第二行升序排列，当有相同项时按照第一行升序排序，那么排序方法如下：<br>ind=np.lexsort(a[0:2,:])<br>A=a.T[ind].T<br>或者<br>A=a[:,ind]<br>这里需要注意，a[ind]是将a矩阵按照ind的次序对其行进行排列</p>
+<h2 id="利用lexsot-对数组按照某一列升序排列"><a href="#利用lexsot-对数组按照某一列升序排列" class="headerlink" title="利用lexsot()对数组按照某一列升序排列"></a>利用lexsot()对数组按照某一列升序排列</h2><p>注意lexsort()的特点，那么只需将数组矩阵做转置，将列变成行，行变成列就可以了。例如：对a矩阵按照第二列升序排列，当遇到相同元素时按照第一列升序排列。首先对a矩阵转置，这样矩阵的列变成了行，然后在对行按照第二行升序的方式排列，都获取相应的序列编号：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a=np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">5</span>],[<span class="number">5</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">9</span>],[<span class="number">6</span>,<span class="number">2</span>,<span class="number">9</span>,<span class="number">5</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">5</span>],</span><br><span class="line">                  [<span class="number">5</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">9</span>],</span><br><span class="line">                  [<span class="number">6</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">5</span>]])</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;a2=np.lexsort(a.T[:<span class="number">2</span>,:])</span><br><span class="line">&gt;&gt;&gt;a2</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>array([<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>])</span><br><span class="line">&gt;&gt;&gt;a[a2,:]</span><br><span class="line"> array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">5</span>],</span><br><span class="line">            [<span class="number">6</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">5</span>],</span><br><span class="line">            [<span class="number">5</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">9</span>]])</span><br></pre></td></tr></table></figure>
+<p>后面有机会在研究一下axis怎么取值，以及对比一下sort、argsort、lexsort、partition、sorted几个排序的用法.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://nirvanasun.github.io2018/09/15/Linux-从server-上下载-上传文件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -527,7 +663,7 @@
 <p>老师，我明天有事情需要请假</p>
 </blockquote>
 </blockquote>
-<h1 id="内嵌代码-code"><a href="#内嵌代码-code" class="headerlink" title="内嵌代码(code)"></a>内嵌代码(<code>code</code>)</h1><p>内嵌代码用(`)，即’Esc’下面的那个建，<br>单行代码：<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">`import numpy as np`</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="内嵌代码-code"><a href="#内嵌代码-code" class="headerlink" title="内嵌代码(code)"></a>内嵌代码(<code>code</code>)</h1><p>内嵌代码用(‘<code>&#39;)，即</code>Esc`下面的那个建，<br>单行代码：<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">`import numpy as np`</span></span><br></pre></td></tr></table></figure></p>
 <p><code>import numpy as np</code></p>
 <p>多行代码 </p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">```python</span></span><br><span class="line"><span class="code">import numpy as np</span></span><br><span class="line"><span class="code">import scipy as sp</span></span><br></pre></td></tr></table></figure>
@@ -920,7 +1056,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -942,7 +1078,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
