@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="python,读取文件,Think Python," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="读写文件的意义当我们有大量的信息、数据时，就需要将其储存起来，而储存就需要将其写入文件中，以便下次使用时再读取。因此，读写文件对于一个工程师，乃至普通的用户来说，是必不可少的一个环节。python有非常方便的读写文件的函数，使文件的读写变得简单、便捷。今天分享ThinkPython这本书中所讲的读写文件一章的主要内容。 如何读写文件在python中，有很多种读写文件的方法和函数库，比较常用的是op">
+<meta name="keywords" content="python,读取文件,Think Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Thinkpython笔记：文件的读写">
+<meta property="og:url" content="http://nirvanasun.github.io/2018/09/19/Thinkpython笔记：文件的读写/index.html">
+<meta property="og:site_name" content="爆裂">
+<meta property="og:description" content="读写文件的意义当我们有大量的信息、数据时，就需要将其储存起来，而储存就需要将其写入文件中，以便下次使用时再读取。因此，读写文件对于一个工程师，乃至普通的用户来说，是必不可少的一个环节。python有非常方便的读写文件的函数，使文件的读写变得简单、便捷。今天分享ThinkPython这本书中所讲的读写文件一章的主要内容。 如何读写文件在python中，有很多种读写文件的方法和函数库，比较常用的是op">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-20T13:41:19.469Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Thinkpython笔记：文件的读写">
+<meta name="twitter:description" content="读写文件的意义当我们有大量的信息、数据时，就需要将其储存起来，而储存就需要将其写入文件中，以便下次使用时再读取。因此，读写文件对于一个工程师，乃至普通的用户来说，是必不可少的一个环节。python有非常方便的读写文件的函数，使文件的读写变得简单、便捷。今天分享ThinkPython这本书中所讲的读写文件一章的主要内容。 如何读写文件在python中，有很多种读写文件的方法和函数库，比较常用的是op">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://nirvanasun.github.io/2018/09/19/Thinkpython笔记：文件的读写/"/>
+
+
+
+
+
+  <title>Thinkpython笔记：文件的读写 | 爆裂</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">爆裂</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">突破自我的束缚</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://nirvanasun.github.io">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="永哥">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="爆裂">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Thinkpython笔记：文件的读写</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-20T09:34:02+08:00">
+                2018-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/编程算法技术/" itemprop="url" rel="index">
+                    <span itemprop="name">编程算法技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="读写文件的意义"><a href="#读写文件的意义" class="headerlink" title="读写文件的意义"></a>读写文件的意义</h1><p>当我们有大量的信息、数据时，就需要将其储存起来，而储存就需要将其写入文件中，以便下次使用时再读取。因此，读写文件对于一个工程师，乃至普通的用户来说，是必不可少的一个环节。<br>python有非常方便的读写文件的函数，使文件的读写变得简单、便捷。今天分享ThinkPython这本书中所讲的读写文件一章的主要内容。</p>
+<h1 id="如何读写文件"><a href="#如何读写文件" class="headerlink" title="如何读写文件"></a>如何读写文件</h1><p>在python中，有很多种读写文件的方法和函数库，比较常用的是open，先对open做一个详细的介绍。</p>
+<h2 id="open-函数的参量"><a href="#open-函数的参量" class="headerlink" title="open 函数的参量"></a>open 函数的参量</h2><p>open有8个参数，展示如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">open(file, mode=<span class="string">'r'</span>, buffering=<span class="number">-1</span>, encoding=<span class="keyword">None</span>, errors=<span class="keyword">None</span>, newline=<span class="keyword">None</span>, closefd=<span class="keyword">True</span>, opener=<span class="keyword">None</span>)</span><br></pre></td></tr></table></figure></p>
+<p>但前两个比较常用，后面几个一般情况下选择默认值就可以了。<br>第一个参数，file是要打开的文件名，可以包含路径信息，格式为字符，如，读取主目录下的一个名字为myfile的matlab文件，file项就可以写为’/home/john/myfile.m’，其中john是用户名。<br>第二项是打开文件的方式，有8个可选值，总结如下：<br>参数|功能|注意事项<br>:—–:|:—-:|:———–:<br>‘r’|以只读的形式打开文件|默认以只读形式打开<br>‘w’|以可写的方式打开文件|文件存在时会覆盖已有内容<br>‘x’|创建并写入一个新文件|如果文件已经存在，则会报错<br>‘a’|以写入的形式打开文件|如果文件已存在，则会在文件末尾写入，忽略指针位置<br>‘b’|以二进制形式打开文件|默认以文本模式打开<br>‘t’|以文本模式打开文件|默认值<br>‘+’|打开文件并更新（读和写）|”“<br>‘U’|通用换行模式|不建议用<br>以上是open的第二这主要参数可选值，可以根据具体情况而做选择。</p>
+<h2 id="文件的写入"><a href="#文件的写入" class="headerlink" title="文件的写入"></a>文件的写入</h2><p>现在来新建并写入一个文件，文件名为write.txt，则这个文件必须以可写的形式打开，具体做法如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;f=open(‘write.txt’,’w’)</span><br></pre></td></tr></table></figure></p>
+<p>如果文件write.txt已经存在，那么’w’的选项会将文件中的原有数据抹掉，而重新写入。<br>现在文件已经打开，如果想写入一句话”It’s my first time to write a file with python”，可以用write()函数，可进行如写操作：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>line1=”It’s my first time to write a file <span class="keyword">with</span> python\n”</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f.write(line1)</span><br><span class="line"><span class="number">47</span></span><br></pre></td></tr></table></figure></p>
+<p>write()输入的是字符串，返回的时输入的字符串额长度，其中，\n 是默认的换行符，意味着下次的输入在下一行中进行。</p>
+<h2 id="文件的保持"><a href="#文件的保持" class="headerlink" title="文件的保持"></a>文件的保持</h2><p>当所有的输入都完成时，可以关闭文件，如下所示所示：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>f.close()</span><br></pre></td></tr></table></figure></p>
+<p>这样就关闭并保存了文件，保存的路径为原来输入的路径。</p>
+<h1 id="格式化操作符"><a href="#格式化操作符" class="headerlink" title="格式化操作符"></a>格式化操作符</h1><p>如前面一节所示，open()打开文件后，一般情况只能输入字符串，那么如果想将要输入的是数字怎么办？可以使用<code>str()</code>函数将数字变成字符，如下所示：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = <span class="number">15</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>str(a)</span><br><span class="line">‘<span class="number">15</span>’</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f.write(str(a))</span><br></pre></td></tr></table></figure></p>
+<p>这样就可以将数字写入到文件中了，当然了，这种方法也有一定的缺陷，不利于批量输入数字和字符的混合文本，python中有一个专门的格式化算符<code>%</code>可以解决这个问题。<code>%</code>本身具有去余数的功能，当它的前面和后面都是数字时，放回出前一个数除以后一个数后的余数，如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">8</span>%<span class="number">3</span></span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure></p>
+<p>当<code>%</code>放在字符串中时，可以将后面的变量变成字符，此时<code>%</code>是格式化算符，它的后面可以有用以说明格式化类型的参量，例如，<code>%d</code>将后面的变量格式化为十进制整数，而<code>%g</code>将其格式化为浮点性数字，<code>%s</code>格式化为字符。具体使用时在字符串中插入%符号，同时在字符串之后也要写上% 及变量，如下所示：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>‘I only have %d yuan <span class="keyword">for</span> you’ % <span class="number">15</span></span><br><span class="line">‘I only have <span class="number">15</span> yuan <span class="keyword">for</span> you’</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'My name is %s, nice meet you!'</span> % <span class="string">'Michael'</span></span><br><span class="line"><span class="string">'My name is Michael, nice meet you!'</span></span><br></pre></td></tr></table></figure></p>
+<p>如果一个字符串中插入多个格式化算符时，相应的，在后面的<code>%</code>之后有跟元组，元组的元素个数与字符串中的<code>%</code>个数一致，如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'%d is the summation of %d and %d'</span> % (<span class="number">10</span>,<span class="number">8</span>,<span class="number">2</span>)</span><br><span class="line"><span class="string">'10 is the summation of 8 and 2'</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="文件名和路径"><a href="#文件名和路径" class="headerlink" title="文件名和路径"></a>文件名和路径</h1><p>不同的文件将会放到不同的路径，因此路径对于读写文件来说是很重要的。在python中，在os模块下有一个专门处理路径的包path，os就是operation system的意思。path中有处理路径相关问题的所有函数。要想使用path，需要先导入os<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br></pre></td></tr></table></figure></p>
+<h2 id="查看路径及文件"><a href="#查看路径及文件" class="headerlink" title="查看路径及文件"></a>查看路径及文件</h2><h3 id="os-getcwd-查看当前路径"><a href="#os-getcwd-查看当前路径" class="headerlink" title="os.getcwd()查看当前路径"></a>os.getcwd()查看当前路径</h3><p>查看当前路径可以用<code>getcwd()</code>函数，’getcwd’是get current working directories 的缩写，即获取当前路径。 当需要查看当前路径时可以使用此函数。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>os.getcwd()</span><br><span class="line"><span class="string">'/home/Michael/Documents/confcarp'</span></span><br></pre></td></tr></table></figure></p>
+<p>需要注意的是，getcwd()不需要输入参量。</p>
+<h3 id="os-path-absdir-查看文件或者文件夹的绝对路径"><a href="#os-path-absdir-查看文件或者文件夹的绝对路径" class="headerlink" title="os.path.absdir()查看文件或者文件夹的绝对路径"></a>os.path.absdir()查看文件或者文件夹的绝对路径</h3><p>当我们希望能够获取当前目录下一个文件或者文件夹所处的绝对路径时可以使用path.absdir()函数，absdir是absolute directories 的缩写,absdir()需要输入一个参量，参量是要查看的文件或者文件夹名，形式为字符串，如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>os.path.abspath(<span class="string">'hello.txt'</span>)</span><br><span class="line"><span class="string">'/home/Michael/Documents/confcarp/hello.txt'</span></span><br></pre></td></tr></table></figure></p>
+<p>当输入参量为空字符串时，返回的是当前绝对路径。</p>
+<h3 id="查看输入是否为路径或文件"><a href="#查看输入是否为路径或文件" class="headerlink" title="查看输入是否为路径或文件"></a>查看输入是否为路径或文件</h3><p>os.path.isdir()可以判断所输入的是否为路径，如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>os.path.isdir(<span class="string">'hello.txt'</span>)</span><br><span class="line"><span class="keyword">False</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>os.path.isdir(<span class="string">'/home/Michael/Documents/confcarp'</span>)</span><br><span class="line"><span class="keyword">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>os.path.isdir(<span class="string">'/home/Michael/Documents/confcarp/'</span>)</span><br><span class="line"><span class="keyword">True</span></span><br></pre></td></tr></table></figure></p>
+<p>如果想要判断输入的是否为文件时则需要用os.path.isfile()，用法与isdir()类似，但输入的是文件时返回真，否则返回假：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>os.path.isfile(<span class="string">'v.txt'</span>)</span><br><span class="line"><span class="keyword">True</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="判断路径或文件是否存在"><a href="#判断路径或文件是否存在" class="headerlink" title="判断路径或文件是否存在"></a>判断路径或文件是否存在</h3><p>os.path.exists()能够判断路径或者文件是否存在，参量为要查看的参量或路径名。</p>
+<h2 id="读取文件名、将文件名与路径名连接"><a href="#读取文件名、将文件名与路径名连接" class="headerlink" title="读取文件名、将文件名与路径名连接"></a>读取文件名、将文件名与路径名连接</h2><h3 id="listdir-读取路径下的所有目录"><a href="#listdir-读取路径下的所有目录" class="headerlink" title="listdir()读取路径下的所有目录"></a>listdir()读取路径下的所有目录</h3><p>os.listdir()可以获取某一路径下的所有文件及文件夹名，一列表形式返回。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>os.listdir(<span class="string">'/home/Michael/Downloads'</span>)</span><br><span class="line">[<span class="string">'nohup.out'</span>,</span><br><span class="line"> <span class="string">'SDXF-master'</span>,</span><br><span class="line"> <span class="string">'pycharm-community-2018.2.2.tar.gz'</span>,</span><br><span class="line"> <span class="string">'dxfwrite-master.zip'</span>,</span><br><span class="line"> <span class="string">'SDXF-master.zip'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>也可以将其赋值给某一变量，如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a=os.listdir(<span class="string">'/home/Michael/Downloads'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a </span><br><span class="line">[<span class="string">'nohup.out'</span>,</span><br><span class="line"> <span class="string">'SDXF-master'</span>,</span><br><span class="line"> <span class="string">'pycharm-community-2018.2.2.tar.gz'</span>,</span><br><span class="line"> <span class="string">'dxfwrite-master.zip'</span>,</span><br><span class="line"> <span class="string">'SDXF-master.zip'</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="将路径和文件名连接成完整的路径"><a href="#将路径和文件名连接成完整的路径" class="headerlink" title="将路径和文件名连接成完整的路径"></a>将路径和文件名连接成完整的路径</h3><p>os.path.joint(path,filename)提供了一个能够将路径和文件名连接成一个完整的path的可能，参量path是路径，filename<br>是文件名，返回文件的完整路径。<br>个人认为这个功能起始可有可无，因为路径名和文件名可以直接通过字符串相加而得到。</p>
+<h1 id="捕获例外情况"><a href="#捕获例外情况" class="headerlink" title="捕获例外情况"></a>捕获例外情况</h1><p>当读取或者写入一个文件时，总是不可避免的出现错误，例如当打开文件的路径有错误时，<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>fin = open(<span class="string">'bad_file'</span>)</span><br><span class="line">IOError: [Errno <span class="number">2</span>] No such file <span class="keyword">or</span> directory: <span class="string">'bad_file'</span></span><br></pre></td></tr></table></figure></p>
+<p>当出现类似的错误时，需要查看文件是否存在，某一路径下的文件名等，总是是一件极其繁琐的事情。python的调试函数try提供了一种解决这种问题的办法，它的用法有些类似与if……else语句：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;<span class="keyword">try</span>:</span><br><span class="line">       fin = open(<span class="string">'bad_file'</span>)</span><br><span class="line">   <span class="keyword">except</span>:</span><br><span class="line">       print(<span class="string">'Something went wrong.'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>python 通常会先执行try后面的语句，如果报错，则会执行except语句。</p>
+<h1 id="为自己写模块"><a href="#为自己写模块" class="headerlink" title="为自己写模块"></a>为自己写模块</h1><p>任何写的python文件都可以被导入，导入用import，如一个名字为’wc.py’的文件中内容如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">linecount</span><span class="params">(filename)</span>:</span></span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> open(filename):</span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> count</span><br><span class="line">print(linecount(<span class="string">'wc.py'</span>))</span><br></pre></td></tr></table></figure></p>
+<p>将其导入时，会返回出相应的结果：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> wc.py</span><br><span class="line"><span class="number">7</span></span><br></pre></td></tr></table></figure></p>
+<p>这时，可以调用wc中的函数：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>wc.linecount(<span class="string">'wc.py'</span>)</span><br><span class="line"><span class="number">7</span></span><br></pre></td></tr></table></figure></p>
+<p>这就是如何在python中写入模块！</p>
+<p>大多数时候，我们不希望在导入的时候返回结构，而是在行脚本的时候才返回结果，这是可以使用python内置变量<strong>name</strong>将最后一句改为:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="string">'__name__'</span>==<span class="string">'__main__'</span>:</span><br><span class="line">    print(linecount(<span class="string">'wc.py'</span>))</span><br></pre></td></tr></table></figure></p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>以上是Think<br>Python这本书中关于文件读写一章的主要内容，学习了一遍，但还是需要更多的进行练习，毕竟知识是死的，而不断的将其用起来，才能有活力，有生机！下次将该章后面的习题做了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/python/" rel="tag"># python</a>
+          
+            <a href="../../../../tags/读取文件/" rel="tag"># 读取文件</a>
+          
+            <a href="../../../../tags/Think-Python/" rel="tag"># Think Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../../16/python-numpy-lexsort-对矩阵按照某行-列-排序/" rel="next" title="python:numpy.lexsort()对矩阵按照某行(列)排序">
+                <i class="fa fa-chevron-left"></i> python:numpy.lexsort()对矩阵按照某行(列)排序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">永哥</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#读写文件的意义"><span class="nav-number">1.</span> <span class="nav-text">读写文件的意义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何读写文件"><span class="nav-number">2.</span> <span class="nav-text">如何读写文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#open-函数的参量"><span class="nav-number">2.1.</span> <span class="nav-text">open 函数的参量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件的写入"><span class="nav-number">2.2.</span> <span class="nav-text">文件的写入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件的保持"><span class="nav-number">2.3.</span> <span class="nav-text">文件的保持</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#格式化操作符"><span class="nav-number">3.</span> <span class="nav-text">格式化操作符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件名和路径"><span class="nav-number">4.</span> <span class="nav-text">文件名和路径</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看路径及文件"><span class="nav-number">4.1.</span> <span class="nav-text">查看路径及文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#os-getcwd-查看当前路径"><span class="nav-number">4.1.1.</span> <span class="nav-text">os.getcwd()查看当前路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#os-path-absdir-查看文件或者文件夹的绝对路径"><span class="nav-number">4.1.2.</span> <span class="nav-text">os.path.absdir()查看文件或者文件夹的绝对路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看输入是否为路径或文件"><span class="nav-number">4.1.3.</span> <span class="nav-text">查看输入是否为路径或文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断路径或文件是否存在"><span class="nav-number">4.1.4.</span> <span class="nav-text">判断路径或文件是否存在</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读取文件名、将文件名与路径名连接"><span class="nav-number">4.2.</span> <span class="nav-text">读取文件名、将文件名与路径名连接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#listdir-读取路径下的所有目录"><span class="nav-number">4.2.1.</span> <span class="nav-text">listdir()读取路径下的所有目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将路径和文件名连接成完整的路径"><span class="nav-number">4.2.2.</span> <span class="nav-text">将路径和文件名连接成完整的路径</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#捕获例外情况"><span class="nav-number">5.</span> <span class="nav-text">捕获例外情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为自己写模块"><span class="nav-number">6.</span> <span class="nav-text">为自己写模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">7.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">永哥</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="../../../../js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
