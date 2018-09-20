@@ -210,7 +210,7 @@
         <li class="menu-item menu-item-categories">
           <a href="" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-categories"></i> <br />
             
             分类
           </a>
@@ -355,7 +355,59 @@
             <h1 id="读写文件的意义"><a href="#读写文件的意义" class="headerlink" title="读写文件的意义"></a>读写文件的意义</h1><p>当我们有大量的信息、数据时，就需要将其储存起来，而储存就需要将其写入文件中，以便下次使用时再读取。因此，读写文件对于一个工程师，乃至普通的用户来说，是必不可少的一个环节。<br>python有非常方便的读写文件的函数，使文件的读写变得简单、便捷。今天分享ThinkPython这本书中所讲的读写文件一章的主要内容。</p>
 <h1 id="如何读写文件"><a href="#如何读写文件" class="headerlink" title="如何读写文件"></a>如何读写文件</h1><p>在python中，有很多种读写文件的方法和函数库，比较常用的是open，先对open做一个详细的介绍。</p>
 <h2 id="open-函数的参量"><a href="#open-函数的参量" class="headerlink" title="open 函数的参量"></a>open 函数的参量</h2><p>open有8个参数，展示如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">open(file, mode=<span class="string">'r'</span>, buffering=<span class="number">-1</span>, encoding=<span class="keyword">None</span>, errors=<span class="keyword">None</span>, newline=<span class="keyword">None</span>, closefd=<span class="keyword">True</span>, opener=<span class="keyword">None</span>)</span><br></pre></td></tr></table></figure></p>
-<p>但前两个比较常用，后面几个一般情况下选择默认值就可以了。<br>第一个参数，file是要打开的文件名，可以包含路径信息，格式为字符，如，读取主目录下的一个名字为myfile的matlab文件，file项就可以写为’/home/john/myfile.m’，其中john是用户名。<br>第二项是打开文件的方式，有8个可选值，总结如下：<br>参数|功能|注意事项<br>:—–:|:—-:|:———–:<br>‘r’|以只读的形式打开文件|默认以只读形式打开<br>‘w’|以可写的方式打开文件|文件存在时会覆盖已有内容<br>‘x’|创建并写入一个新文件|如果文件已经存在，则会报错<br>‘a’|以写入的形式打开文件|如果文件已存在，则会在文件末尾写入，忽略指针位置<br>‘b’|以二进制形式打开文件|默认以文本模式打开<br>‘t’|以文本模式打开文件|默认值<br>‘+’|打开文件并更新（读和写）|”“<br>‘U’|通用换行模式|不建议用<br>以上是open的第二这主要参数可选值，可以根据具体情况而做选择。</p>
+<p>但前两个比较常用，后面几个一般情况下选择默认值就可以了。<br>第一个参数，file是要打开的文件名，可以包含路径信息，格式为字符，如，读取主目录下的一个名字为myfile的matlab文件，file项就可以写为’/home/john/myfile.m’，其中john是用户名。<br>第二项是打开文件的方式，有8个可选值，总结如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">参数</th>
+<th style="text-align:center">功能</th>
+<th style="text-align:center">注意事项</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">‘r’</td>
+<td style="text-align:center">以只读的形式打开文件</td>
+<td style="text-align:center">默认以只读形式打开</td>
+</tr>
+<tr>
+<td style="text-align:center">‘w’</td>
+<td style="text-align:center">以可写的方式打开文件</td>
+<td style="text-align:center">文件存在时会覆盖已有内容</td>
+</tr>
+<tr>
+<td style="text-align:center">‘x’</td>
+<td style="text-align:center">创建并写入一个新文件</td>
+<td style="text-align:center">如果文件已经存在，则会报错</td>
+</tr>
+<tr>
+<td style="text-align:center">‘a’</td>
+<td style="text-align:center">以写入的形式打开文件</td>
+<td style="text-align:center">如果文件已存在，则会在文件末尾写入，忽略指针位置</td>
+</tr>
+<tr>
+<td style="text-align:center">‘b’</td>
+<td style="text-align:center">以二进制形式打开文件</td>
+<td style="text-align:center">默认以文本模式打开</td>
+</tr>
+<tr>
+<td style="text-align:center">‘t’</td>
+<td style="text-align:center">以文本模式打开文件</td>
+<td style="text-align:center">默认值</td>
+</tr>
+<tr>
+<td style="text-align:center">‘+’</td>
+<td style="text-align:center">打开文件并更新（读和写）</td>
+<td style="text-align:center">no</td>
+</tr>
+<tr>
+<td style="text-align:center">‘U’</td>
+<td style="text-align:center">通用换行模式</td>
+<td style="text-align:center">不建议用</td>
+</tr>
+</tbody>
+</table>
+<p>以上是open的第二这主要参数可选值，可以根据具体情况而做选择。</p>
 <h2 id="文件的写入"><a href="#文件的写入" class="headerlink" title="文件的写入"></a>文件的写入</h2><p>现在来新建并写入一个文件，文件名为write.txt，则这个文件必须以可写的形式打开，具体做法如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;f=open(‘write.txt’,’w’)</span><br></pre></td></tr></table></figure></p>
 <p>如果文件write.txt已经存在，那么’w’的选项会将文件中的原有数据抹掉，而重新写入。<br>现在文件已经打开，如果想写入一句话”It’s my first time to write a file with python”，可以用write()函数，可进行如写操作：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>line1=”It’s my first time to write a file <span class="keyword">with</span> python\n”</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f.write(line1)</span><br><span class="line"><span class="number">47</span></span><br></pre></td></tr></table></figure></p>
 <p>write()输入的是字符串，返回的时输入的字符串额长度，其中，\n 是默认的换行符，意味着下次的输入在下一行中进行。</p>
@@ -1435,24 +1487,7 @@
   
 
 
-  <script type="text/javascript" src="js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  <script type="text/javascript" src="js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
@@ -1505,6 +1540,45 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
 
   
 
